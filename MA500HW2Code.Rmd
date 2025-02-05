@@ -1,0 +1,46 @@
+---
+title: "MA500HW2"
+author: "Chang Lu"
+date: "2025-02-04"
+output: pdf_document
+---
+
+```{r}
+age <- c(9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20)
+frequency <- c(13, 35, 44, 69, 36, 24, 7, 3, 2, 5, 1, 1)
+
+age_data <- rep(age, frequency)
+
+hist(age_data, breaks = seq(8.5, 20.5, 1), main = "Histogram of Age at Walking",
+     xlab = "Age (Months)", ylab = "Frequency", col = "lightblue", border = "black")
+```
+
+```{r}
+# Calculate the mean
+total_frequency <- sum(frequency)
+mean_age <- sum(age * frequency) / total_frequency
+
+# Calculate the standard deviation
+sd_age <- sqrt(sum(frequency * (age - mean_age)^2) / (total_frequency - 1))
+
+# Calculate the standard error
+se_age <- sd_age / sqrt(total_frequency)
+
+# Calculate the 95% confidence interval
+z <- 1.96
+lower_ci <- mean_age - z * se_age
+upper_ci <- mean_age + z * se_age
+
+cat("Mean Age:", mean_age, "\n")
+cat("Standard Deviation:", sd_age, "\n")
+cat("Standard Error:", se_age, "\n")
+cat("95% Confidence Interval: (", lower_ci, ",", upper_ci, ")\n")
+```
+
+```{r}
+E <- 0.5
+
+required_n <- (z * sd_age / E)^2
+
+cat("Required Sample Size:", ceiling(required_n), "\n")
+```
